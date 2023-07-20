@@ -17,6 +17,8 @@ const getTasks = async(req,res) => {
     res.status(500).json({msg: error.message})
   }
 }
+
+//Get a single task
 const getTask = async(req,res) => {
   try {
     const { id } = req.params;
@@ -30,10 +32,24 @@ const getTask = async(req,res) => {
     res.status(500).json({msg: error.message})
   }
 }
-
+//Delete a task
+const deleteTask = async(req,res) => {
+  try {
+    const { id } = req.params;
+    const task = await Task.findByIdAndDelete(id);
+    if(!task) {
+      return res.status(404).json(`No task with id ${id}`)
+    }
+    res.status(200).send('Deleted successfully')
+    
+  } catch (error) {
+    res.status(500).json({msg: error.message})
+  }
+}
 
 module.exports = {
-  createTask,
+  createTask, 
   getTasks,
-  getTask
+  getTask,
+  deleteTask
 }
