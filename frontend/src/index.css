@@ -16,6 +16,7 @@
 
   --color-primary: #007bff;
   --color-success: #28a745;
+  --color-danger: orangered;
 }
 
 * {
@@ -384,7 +385,8 @@ p {
 }
 
 .--width-500px {
-  width: 500px;
+  width: 100%;
+  max-width: 500px;
 }
 
 .--line {
@@ -429,4 +431,113 @@ a {
 a:hover {
   color: var(--color-dark);
   font-size: 1.5rem;
+}
+
+/* TASK APP CSS */
+.app {
+  width: 100%;
+  min-height: 100vh;
+  background-color: var(--color-primary);
+  display: flex;
+  justify-content: center;
+  align-items: start;
+  padding: 0 10px;
+}
+
+.task-container {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+  background-color: #fff;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  box-shadow: var(--box-shadow);
+  overflow: hidden;
+  margin-top: 100px;
+  padding: 3rem 2rem;
+}
+
+.task-form {
+  width: 100%;
+  margin: 2rem 0;
+  display: flex;
+}
+.task-form input {
+  width: 85%;
+  height: 4rem;
+  font-size: 1.6rem;
+  padding: 0 5px;
+  outline: none;
+  /* margin-right: 5px; */
+}
+.task-form button {
+  width: 15%;
+  height: 4rem;
+  font-size: 1.8rem;
+  cursor: pointer;
+  background-color: var(--color-purple);
+  color: #fff;
+  border: none;
+  transition: all 0.3s;
+}
+
+.task-form button:hover {
+  background-color: var(--color-primary);
+}
+
+.task {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  background-color: #eee;
+  padding: 10px;
+  margin: 7px 0;
+  animation: slide-in ease 0.5s;
+}
+
+@keyframes slide-in {
+  0% {
+    transform: translateX(40px);
+  }
+  50% {
+    transform: translateX(-20px);
+  }
+  100% {
+    transform: translateX(0);
+  }
+}
+
+.task::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 5px;
+  background-color: var(--color-danger);
+}
+
+.completed {
+  position: relative;
+}
+
+.completed::after {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 5px;
+  background-color: var(--color-success);
+}
+
+.task-icons {
+  font-size: 1.6rem;
+}
+
+.task-icons > * {
+  margin-left: 7px;
+  cursor: pointer;
 }
