@@ -22,7 +22,15 @@ app.post('/api/tasks', async(req,res) => {
   res.status(500).json({msg: error.message})
  }
 })
-
+//Read data
+app.get('/api/tasks', async (req,res) => {
+  try {
+    const tasks = await Task.find()
+    res.status(200).json(tasks)
+  } catch (error) {
+    res.status(500).json({msg: error.message})
+  }
+})
 
 const PORT = process.env.PORT || 5000;
 
