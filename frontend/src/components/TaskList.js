@@ -14,6 +14,8 @@ const TaskList = () => {
     name: '',
     completed: false
   })
+  const [isEditing, setIsEditing] = useState(false)
+  const [taskID, setTaskID] = useState('')
 
   const { name } = formData;
 
@@ -59,10 +61,20 @@ const TaskList = () => {
       toast.error(error.message)
     }
   }
+
+  const getSingleTask = async (task) =>  {
+    setFormData({name: task.name, completed: false})
+    setTaskID(task._id);
+    setIsEditing(true)
+  }
+
+  const updateTask = async () => {
+
+  }
   return (
-    <div>
+    <div> 
       <h2>Task Manager</h2>
-      <TaskForm name={ name } handleInputChange={handleInputChange} createTask={createTask} />
+      <TaskForm name={ name } updateTask={updateTask} handleInputChange={handleInputChange} createTask={createTask} isEditing={isEditing} />
       <div className='--flex-between --pb'>
         <p><b>Total tasks: </b> 0</p>
         <p><b>Completed tasks: </b> 0</p>
@@ -82,7 +94,7 @@ const TaskList = () => {
           <>
           {tasks.map((task,index) => {
             return (
-              <Task key={task._id} deleteTask={deleteTask} task={task} index={index} />
+              <Task key={task._id} getSingleTask={getSingleTask} deleteTask={deleteTask} task={task} index={index} />
             )
           })}
           </>
