@@ -1,11 +1,15 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import axios from 'axios';
 import TaskForm from './TaskForm';
 import {toast} from 'react-toastify';
 import Task from './Task'
 import { URL } from '../App';
+import loadingImg from '../assets/loader.gif';
 
 const TaskList = () => {
+  const [tasks, setTasks] = useState([]);
+  const [completedTasks, setCompletedTasks] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [formData,setFormData] = useState({
     name: '',
     completed: false
@@ -18,6 +22,21 @@ const TaskList = () => {
     setFormData({...formData, [name]: value})
   }
 
+  const getTasks = async() => {
+    setIsLoading(true);
+    try {
+      const {data} = await axios.get(`${URL}/api/tasks`);
+      setTasks(data)
+      setIsLoading(false )
+    } catch (error) {
+      toast.error(error.message);
+      setIsLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    getTasks()
+  }, [])
   const createTask = async(e) => {
     e.preventDefault();
     if(name === '') {
@@ -40,7 +59,27 @@ const TaskList = () => {
         <p><b>Completed tasks: </b> 0</p>
       </div>
       <hr />
-      <Task />
+      {
+        isLoading && (
+          <div className='--flex-center'>
+            <img src={loadingImg} alt="LOADING!!!" />
+          </div>
+         )
+      }
+      {
+        !isLoading && tasks.length === 0 ? (
+          <p className='--py'>No task added, please add a task</p>
+        ) : (
+          <>
+          {tasks.map((task,index) => {
+            return (
+              <Task  />
+            )
+          })}
+          </>
+        )
+      }
+     
     </div>
   )
 }
