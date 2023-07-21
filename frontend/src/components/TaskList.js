@@ -73,7 +73,7 @@ const TaskList = () => {
           <>
           {tasks.map((task,index) => {
             return (
-              <Task  />
+              <Task key={task._id} task={task} index={index} />
             )
           })}
           </>
